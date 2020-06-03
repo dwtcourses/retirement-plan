@@ -1,0 +1,10 @@
+name: balancesheet
+title:
+username:
+account: changyue
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2361555
+bundleId: 3196193
+url: https://changyue.shinyapps.io/balancesheet/
+when: 1590594425.25166
