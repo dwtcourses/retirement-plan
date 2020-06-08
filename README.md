@@ -1,7 +1,7 @@
 # Project Description
-Personal financial planning by life-cycle model
+This project aims to build an integrated website for personal financial planning and wealth management from the perspective of lifecycle model. 
 
-## Shinyapps.io
+## Web Link
 https://changyue.shinyapps.io/retirementplan/
 
 ## R shiny learning mateirals
