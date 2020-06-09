@@ -3,6 +3,8 @@
 library(shiny)
 library(shinydashboard)
 
+source("global.R")
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output,session){
     
@@ -58,36 +60,19 @@ shinyServer(function(input, output,session){
     })
     
     ### bank account balance ####
-    output$bank_balance <- renderUI({
-        numericInput(paste0('bank_account', 1), paste0('Balance ', 1),0)
-        # numericInput(varaible name,title, number )
-    })
+    output$bank_balance <- basicadd("bank_account","Balance ")
+    
+    bankaccount <- addbutton("addbank","bank_account","Balance ",input)
+    
+    
 
-    ## reactive values
-    # store history as reactive values
-    num_bank <- reactiveValues(clicked = c(1)) # number of clicks
-    observeEvent(input$addbank, {
-        num_bank[['clicked']] <- 
-            c(num_bank[['clicked']],length(num_bank[['clicked']])+1)
-        insertUI("#addbank", "beforeBegin",
-                 ui= numericInput(paste0('bank_account', length(num_bank[['clicked']])), 
-                                  paste0('Balance ',length(num_bank[['clicked']]) ),0))
-    })
-    
     ### Vehicle Value ####
-    output$vehicle_value <- renderUI({
-        numericInput(paste0('vehicle', 1), paste0('Vehicle ', 1),0)
-        # numericInput(varaible name,title, number )
-    })
+    output$vehicle_value <- basicadd("vehicle","Vehicle ")
     
-    num_vehicle <- reactiveValues(clicked = c(1)) # number of clicks
-    observeEvent(input$addvehicle, {
-        num_vehicle[['clicked']] <- 
-            c(num_vehicle[['clicked']],length(num_vehicle[['clicked']])+1)
-        insertUI("#addvehicle", "beforeBegin",
-                 ui= numericInput(paste0('vehicle', length(num_vehicle[['clicked']])), 
-                                  paste0('Vehicle ',length(num_vehicle[['clicked']]) ),0))
-    })
+    vehicle<- addbutton("addvehicle",'vehicle','Vehicle ',input)
+    
+    
+
     ### credit card balance ####
     output$credit_card_balance <- renderUI({
         numericInput(paste0('credit_card', 1), paste0('Balance ', 1),0)
@@ -109,6 +94,7 @@ shinyServer(function(input, output,session){
         numericInput(paste0('loan', 1), paste0('Loan ', 1),0)
         # numericInput(varaible name,title, number )
     })
+    #loantest <- input$loan1
     
     num_loan <- reactiveValues(clicked = c(1)) # number of clicks
     observeEvent(input$addloan, {
