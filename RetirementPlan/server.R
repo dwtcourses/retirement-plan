@@ -55,23 +55,23 @@ shinyServer(function(input, output,session){
         updateTabsetPanel(session = session, inputId = "ex_liab_tabs", selected = "loan_tab")
     })
     
-    observeEvent(input$back2sheet,  {
-        updateTabItems(session, "tabs", "sheet")
-    })
+    #observeEvent(input$back2sheet,  {
+    #    updateTabItems(session, "tabs", "sheet")
+    #})
     
     ### bank account balance ####
     output$bank_balance <- basicadd("bank_account","Balance ")
     
     bankaccount <- addbutton("addbank","bank_account","Balance ",input)
     
-    
+    actback("back_bank",input,session)
 
     ### Vehicle Value ####
     output$vehicle_value <- basicadd("vehicle","Vehicle ")
     
     vehicle<- addbutton("addvehicle",'vehicle','Vehicle ',input)
     
-    
+    actback("back_veh",input,session)
 
     ### credit card balance ####
     output$credit_card_balance <- renderUI({
@@ -88,13 +88,14 @@ shinyServer(function(input, output,session){
                                   paste0('Balance ',length(num_credit_card[['clicked']]) ),0))
     })
     
+    actback("back_credit",input,session)
     
     ### loans #####
     output$loan_balance <- renderUI({
-        numericInput(paste0('loan', 1), paste0('Loan ', 1),0)
+    numericInput(paste0('loan', 1), paste0('Loan ', 1),0)
         # numericInput(varaible name,title, number )
     })
-    #loantest <- input$loan1
+
     
     num_loan <- reactiveValues(clicked = c(1)) # number of clicks
     observeEvent(input$addloan, {
@@ -116,7 +117,7 @@ shinyServer(function(input, output,session){
     total_hum_capital <- 70
     
     # calculate total asset
-    total_asset <- total_fin_asset+total_hum_capital
+    total_asset <- total_fin_asset + total_hum_capital
     
     # calculate total liability
     total_liab <- total_im_liab + total_ex_liab

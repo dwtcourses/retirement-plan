@@ -80,7 +80,7 @@ asset_page <- tabItem(tabName = "asset",
                               title = "Bank Account Balance",
                               uiOutput("bank_balance"),
                               actionButton("addbank", "Add"),
-                              actionButton("back2sheet", "Back")),
+                              backbutton("back_bank")),
                               
                           tabPanel(
                               value = "investment_tab",
@@ -91,7 +91,7 @@ asset_page <- tabItem(tabName = "asset",
                               title = "Vehicles",
                               uiOutput("vehicle_value"),
                               actionButton("addvehicle", "Add"),
-                              actionButton("back2sheet", "Back")),
+                              backbutton("back_veh")),
                           
                           tabPanel(
                               value = "house_tab",
@@ -123,13 +123,13 @@ ex_liab_page <- tabItem(tabName = "ex_liab",
                                 title = "Credit Card Balance", 
                                 uiOutput("credit_card_balance"),
                                 actionButton("addcreditcard", "Add"),
-                                actionButton("back2sheet", "Back")),
+                                backbutton("back_credit")),
                             tabPanel(
                                 value = "loan_tab",
                                 title = "Loans", 
                                 uiOutput("loan_balance"),
                                 actionButton("addloan", "Add"),
-                                actionButton("back2sheet", "Back"))
+                                backbutton("back_loan"))
                         )
                       
 )

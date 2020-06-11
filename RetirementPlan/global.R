@@ -4,7 +4,7 @@
 
 basicadd <- function(index,title){
   renderUI({
-    numericInput(paste0(index, 1), paste0(title, 1),0)
+    numericInput(paste0(index,"1"), paste0(title, "1"),0)
   })
 }
 
@@ -24,3 +24,16 @@ addbutton <- function(button,index,title,input){
 }
 
 #back Button
+
+backbutton <- function(name){
+  actionButton(name, "Back")
+}
+
+actback <- function(name,input,session){
+  observeEvent(input[[name]],  {
+    updateTabItems(session, "tabs", "sheet")
+  })
+}
+
+
+
