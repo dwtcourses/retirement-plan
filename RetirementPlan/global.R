@@ -11,15 +11,20 @@ basicadd <- function(index,title){
 addbutton <- function(button,index,title,input){
   num <- reactiveVal(1)
   result <- list()
-  result$num <- num
-  result$account <-reactive(get(paste0(index, 1)))
-  result$action <-
+  result$num <- reactive({num()})
+  name1 <- paste0(index, 1)
+  result$account <- reactive({input[[name1]]})
+  #result$action <-
     observeEvent(input[[button]], {
+      
       insertUI(paste0("#",button), "beforeBegin",
                ui= numericInput(paste0(index, num(num()+1)), 
-                                paste0(title,num() ),0))
-    result$account <-c(result$account,reactive(get(paste0(index, num()) )) )
-    })
+                                paste0(title,num() ),0)) 
+    
+    name2 <-  reactive({ paste0(index, num() ) }) 
+    acc <- reactive({input[[result$name2() ]]})
+    result$account <- reactive({result$account()+acc()})
+    })           
   return(result)
 }
 

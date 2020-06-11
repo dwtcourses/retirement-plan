@@ -111,24 +111,24 @@ shinyServer(function(input, output,session){
     
     ### subtotal and total output ####
     # functions to calculate ...
-    total_fin_asset <- 30
+    total_fin_asset <- reactive( { bankaccount$account() })
     total_ex_liab <- 40
     total_im_liab <- 40
     total_hum_capital <- 70
     
     # calculate total asset
-    total_asset <- total_fin_asset + total_hum_capital
+    total_asset <- reactive({total_fin_asset() + total_hum_capital})
     
     # calculate total liability
     total_liab <- total_im_liab + total_ex_liab
     
     # calculate total economic networth
-    econ_net_worth <- total_asset - total_liab
+    econ_net_worth <- reactive({total_asset() - total_liab})
     
     # value boxes output
     output$AssetBox <- renderValueBox({
         valueBox(
-            total_fin_asset, "Subtotal", icon = icon("coins")
+            total_fin_asset(), "Subtotal", icon = icon("coins")
         )
     })  
     
@@ -155,7 +155,7 @@ shinyServer(function(input, output,session){
     
     output$totalAssetBox <- renderValueBox({
         valueBox(
-            total_asset, "Total Assets", icon = icon("coins"),
+            total_asset(), "Total Assets", icon = icon("coins"),
             color = "blue"
         )
     })   
@@ -167,7 +167,7 @@ shinyServer(function(input, output,session){
     })
     output$networthBox <- renderValueBox({
         valueBox(
-            econ_net_worth, "Economic Net Worth", icon = icon("dollar-sign"),
+            econ_net_worth(), "Economic Net Worth", icon = icon("dollar-sign"),
             color = "red"
         )
     })
