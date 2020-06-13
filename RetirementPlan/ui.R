@@ -79,8 +79,10 @@ asset_page <- tabItem(tabName = "asset",
                               value = "bank_tab",
                               title = "Bank Account Balance",
                               uiOutput("bank_balance"),
-                              actionButton("addbank", "Add"),
-                              backbutton("back_bank")),
+                              addbutton("add_bank"),
+                              backbutton("back_bank"),
+                              updatebutton("update_bank")
+                              ),
                               
                           tabPanel(
                               value = "investment_tab",
@@ -90,8 +92,9 @@ asset_page <- tabItem(tabName = "asset",
                               value = "vehicle_tab",
                               title = "Vehicles",
                               uiOutput("vehicle_value"),
-                              actionButton("addvehicle", "Add"),
-                              backbutton("back_veh")),
+                              addbutton("add_veh"),
+                              backbutton("back_veh"),
+                              updatebutton("update_veh")),
                           
                           tabPanel(
                               value = "house_tab",
@@ -122,14 +125,16 @@ ex_liab_page <- tabItem(tabName = "ex_liab",
                                 value = "credit_card_tab",
                                 title = "Credit Card Balance", 
                                 uiOutput("credit_card_balance"),
-                                actionButton("addcreditcard", "Add"),
-                                backbutton("back_credit")),
+                                addbutton("add_cred"),
+                                backbutton("back_cred"),
+                                updatebutton("update_cred")),
                             tabPanel(
                                 value = "loan_tab",
                                 title = "Loans", 
                                 uiOutput("loan_balance"),
-                                actionButton("addloan", "Add"),
-                                backbutton("back_loan"))
+                                addbutton("add_loan"),
+                                backbutton("back_loan"),
+                                updatebutton("update_loan"))
                         )
                       
 )

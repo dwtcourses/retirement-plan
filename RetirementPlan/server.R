@@ -62,57 +62,41 @@ shinyServer(function(input, output,session){
     ### bank account balance ####
     output$bank_balance <- basicadd("bank_account","Balance ")
     
-    bankaccount <- addbutton("addbank","bank_account","Balance ",input)
+    bankaccount <- actadd("add_bank","bank_account","Balance ",input)
     
     actback("back_bank",input,session)
+    sum_bank <- actupdate("update_bank",bankaccount,"bank_account",input)
 
     ### Vehicle Value ####
     output$vehicle_value <- basicadd("vehicle","Vehicle ")
     
-    vehicle<- addbutton("addvehicle",'vehicle','Vehicle ',input)
+    vehicle<- actadd("add_veh",'vehicle','Vehicle ',input)
     
     actback("back_veh",input,session)
+    sum_veh <- actupdate("update_veh",vehicle,"vehicle",input)
+   
 
     ### credit card balance ####
-    output$credit_card_balance <- renderUI({
-        numericInput(paste0('credit_card', 1), paste0('Balance ', 1),0)
-        # numericInput(varaible name,title, number )
-    })
-
-    num_credit_card <- reactiveValues(clicked = c(1)) # number of clicks
-    observeEvent(input$addcreditcard, {
-        num_credit_card[['clicked']] <- 
-            c(num_credit_card[['clicked']],length(num_credit_card[['clicked']])+1)
-        insertUI("#addcreditcard", "beforeBegin",
-                 ui= numericInput(paste0('credit_card', length(num_credit_card[['clicked']])), 
-                                  paste0('Balance ',length(num_credit_card[['clicked']]) ),0))
-    })
+    output$credit_card_balance <- basicadd("credit_card","Balance ")
     
-    actback("back_credit",input,session)
+    creditcard<- actadd("add_cred","credit_card","Balance ",input)
+    
+    actback("back_cred",input,session)
+    sum_cred <- actupdate("update_cred",creditcard,"credit_card",input)
     
     ### loans #####
-    output$loan_balance <- renderUI({
-    numericInput(paste0('loan', 1), paste0('Loan ', 1),0)
-        # numericInput(varaible name,title, number )
-    })
-
+    output$loan_balance <- basicadd("loan","Loan ")
     
-    num_loan <- reactiveValues(clicked = c(1)) # number of clicks
-    observeEvent(input$addloan, {
-        num_loan[['clicked']] <- 
-            c(num_loan[['clicked']],length(num_loan[['clicked']])+1)
-        insertUI("#addloan", "beforeBegin",
-                 ui= numericInput(paste0('loan_account', length(num_loan[['clicked']])), 
-                                  paste0('Loan ',length(num_loan[['clicked']]) ),0))
-    })
+    loan_loan<- actadd("add_loan","loan","Loan ",input)
     
+    actback("back_loan",input,session)
+    sum_loan <- actupdate("update_loan",loan_loan,"loan",input)
     
-    
-    
+   
     ### subtotal and total output ####
     # functions to calculate ...
-    total_fin_asset <- reactive( { bankaccount$account() })
-    total_ex_liab <- 40
+    total_fin_asset <- reactive({sum_bank()+sum_veh()})
+    total_ex_liab <- reactive({sum_cred()+sum_loan()})
     total_im_liab <- 40
     total_hum_capital <- 70
     
@@ -120,10 +104,10 @@ shinyServer(function(input, output,session){
     total_asset <- reactive({total_fin_asset() + total_hum_capital})
     
     # calculate total liability
-    total_liab <- total_im_liab + total_ex_liab
+    total_liab <- reactive({total_im_liab + total_ex_liab()})
     
     # calculate total economic networth
-    econ_net_worth <- reactive({total_asset() - total_liab})
+    econ_net_worth <- reactive({total_asset() - total_liab()})
     
     # value boxes output
     output$AssetBox <- renderValueBox({
@@ -141,7 +125,7 @@ shinyServer(function(input, output,session){
     
     output$ExLiabBox <- renderValueBox({
         valueBox(
-            total_ex_liab, "Subtotal", icon = icon("file-invoice-dollar"),
+            total_ex_liab(), "Subtotal", icon = icon("file-invoice-dollar"),
             color = "maroon"
         )
     }) 
@@ -152,7 +136,7 @@ shinyServer(function(input, output,session){
             color = "purple"
         )
     })  
-    
+
     output$totalAssetBox <- renderValueBox({
         valueBox(
             total_asset(), "Total Assets", icon = icon("coins"),
@@ -161,7 +145,7 @@ shinyServer(function(input, output,session){
     })   
     output$totalLiabilityBox <- renderValueBox({
         valueBox(
-            total_liab, "Total Liabilities", icon = icon("file-invoice-dollar"),
+            total_liab(), "Total Liabilities", icon = icon("file-invoice-dollar"),
             color = "yellow"      
             )
     })
